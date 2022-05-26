@@ -1,5 +1,5 @@
 const userRouter = require('express').Router();
-const { userLogin, userRegister} = require('../services/userData');
+const { userLogin, userRegister, selectTodos} = require('../services/userData');
 
 userRouter.post('/register', (request, response) => {
     const newUser = request.body;
@@ -26,6 +26,33 @@ userRouter.post('/login', (request, response) => {
     }).catch(e => {
         response.status(500).json(e);
     });
+});
+
+userRouter.get('/usu', (req,res)=>{
+	selectTodos('Cliente')
+	.then(userData => {
+		res.status(302).json(userData);
+	}).catch(e => {
+		response.status(500).json(e);
+	});
+});
+
+userRouter.get('/eve', (req,res)=>{
+	selectTodos('Eventos')
+	.then(userData => {
+		res.status(302).json(userData);
+	}).catch(e => {
+		response.status(500).json(e);
+	});
+});
+
+userRouter.get('/adm', (req,res)=>{
+	selectTodos('Administradores')
+	.then(userData => {
+		res.status(302).json(userData);
+	}).catch(e => {
+		response.status(500).json(e);
+	});
 });
 
 module.exports = userRouter;

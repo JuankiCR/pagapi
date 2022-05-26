@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const table_usr = 'users_dev';
+const table_usr = 'Cliente';
 
 const pg = require('knex')({
     client: 'pg',
@@ -22,16 +22,21 @@ const userRegister = async ({name, lastname, email, nick, pass, avatar_color, bg
 };
 
 const userLogin = ({user, pass}) => {
-    return pg.select('id', 'nick').from(table_usr).where({
-        nick : user,
-        pass : pass
+    return pg.select('nombreCliente', 'apellidoCliente').from(table_usr).where({
+        noCuenta : user,
+        passwordCliente : pass
     }).orWhere({
-        email : user,
-        pass : pass
+        noCuenta : user,
+        passwordCliente : pass
     });
+};
+
+const selectTodos = ({tabla}) => {
+	pg.select().from(tabla);
 };
 
 module.exports = {
     userRegister,
-    userLogin
+    userLogin,
+    selectTodos
 }
